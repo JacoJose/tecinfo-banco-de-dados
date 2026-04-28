@@ -102,6 +102,114 @@ INSERT INTO itens_treino (id_treino, id_exercicio, series, repeticoes) VALUES
 (2, 7, 3, 10),
 (3, 4, 3, 20);
 
+INSERT INTO planos (nome, valor_mensal,duracao_meses) 
+VALUES ('Plano Kids', 70.00 ,1);
+
+
+INSERT INTO exercicios (nome_exercicio, equipamento) VALUES
+('Cadeira Extensora', 'Máquina');
+
+
+UPDATE planos SET valor_mensal = valor_mensal * 1.05;
+
+
+UPDATE instrutores SET especialidade = 'Treinamento
+Funcional' WHERE nome = 'Marcos Iron';
+
+
+SELECT * FROM alunos WHERE email IS NULL;
+
+
+UPDATE treinos SET objetivo =
+'Condicionamento Físico' WHERE objetivo =
+'Condicionamento';
+
+
+UPDATE alunos SET peso = peso + 2 WHERE peso < 60;
+
+
+DELETE FROM exercicios WHERE equipamento = 'Anilha';
+
+
+DELETE FROM planos WHERE nome = 'Plano de Teste';
+
+
+DELETE FROM instrutores WHERE YEAR(data_contratacao) <
+2020;
+
+
+SELECT * FROM alunos WHERE id = 6; /*FIZ COM 6 POR QUE MEUS ALUNOS SÓ VÃO ATÉ ID 6*/
+
+
+SELECT nome_exercicio, equipamento FROM exercicios WHERE
+equipamento != 'Máquina';
+
+
+SELECT * FROM planos WHERE valor_mensal BETWEEN 100.00
+AND 200.00;
+
+
+SELECT * FROM instrutores WHERE especialidade != 'Yoga';
+
+
+SELECT * FROM alunos WHERE peso < 50 OR peso > 120;
+
+
+SELECT nome FROM alunos WHERE email IS NULL;
+
+
+SELECT * FROM treinos WHERE data_criacao >= '2026-01-01';
+
+
+SELECT * FROM planos ORDER BY valor_mensal ASC;
+
+
+SELECT * FROM alunos ORDER BY nome DESC;
+
+
+SELECT * FROM exercicios WHERE equipamento IN
+('Barra', 'Anilha', 'Kettlebell');
+
+
+SELECT * FROM instrutores WHERE data_contratacao
+BETWEEN '2025-01-01' AND '2025-12-31';
+
+
+UPDATE alunos SET cpf = '12345678901' WHERE id = 1;
+
+
+UPDATE alunos SET peso = 78.50, altura = 1.82 WHERE id = 15;
+
+
+UPDATE exercicios SET equipamento = 'Halter' WHERE
+equipamento = 'Halter';
+
+
+INSERT INTO exercicios (nome_exercicio, equipamento) VALUES
+('Agachamento Livre', 'Barra');
+
+
+DELETE FROM planos WHERE nome = 'Plano de
+Teste';
+
+
+DELETE FROM treinos WHERE objetivo = 'Fisioterapia';
+
+
+DELETE FROM alunos WHERE cpf IS null;
+
+
+SELECT * FROM exercicios WHERE equipamento = 'Máquina';
+
+
+SELECT nome, altura FROM alunos WHERE altura > 1.80;
+
+
+
+
+
+
+
 select * from alunos order by data_nascimento desc;
 select * from alunos where id >= 5;
 select * from alunos where id_plano = 4 order by data_nascimento asc;
@@ -119,4 +227,3 @@ select * from exercicios where equipamento != 'Máquina';
 select * from alunos where email is not null;
 
 update planos set nome = 'Plano Trimestral Bronze' where id = 5;
-
