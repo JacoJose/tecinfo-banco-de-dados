@@ -138,7 +138,7 @@ DELETE FROM instrutores WHERE YEAR(data_contratacao) <
 2020;
 
 
-SELECT * FROM alunos WHERE id = 6; /*FIZ COM 6 POR QUE MEUS ALUNOS SÓ VÃO ATÉ ID 6*/
+SELECT * FROM alunos WHERE id = 6; /*FIZ COM 6 POR QUE MEUS ALUNOS SÓ VÃO ATÉ ID 6 */
 
 
 SELECT nome_exercicio, equipamento FROM exercicios WHERE
@@ -228,38 +228,91 @@ select * from alunos where email is not null;
 
 update planos set nome = 'Plano Trimestral Bronze' where id = 5;
 
-select nome as "Nome do Aluno",
-DATE_FORMAT(data_nascimento, "%D/%M/%Y") as "Data de Nascimento",
-cpf as "CPF do Aluno"
-from alunos where peso > 60;
-
-select max(peso) from alunos;
-
-select * from alunos;
-
-select distinct equipamento from exercicios;
-
-select * from alunos a
-inner join planos p on a.id_plano = p.id;
-
-select * from planos
-
-select 
-	a.nome as "Nome Aluno",
-	p.nome as "Nome do Plano"
-from alunos as a
-inner join planos p on a.id_plano = p.id
-where a.nome = "Ana Souza";
-
-select
-	i.nome as "Nome do Instrutor",
-	t.objetivo as "Nome do Treino,",
-	DATE_FORMAT(data_criacao,"%D/%M/%Y") as "Data de Criação"
-from instrutores as i
-inner join treinos t on i.id = t.id_instrutor 
-where i.nome = "Renato Personal";
-
-select * from treino
 
 
 
+
+SELECT DISTINCT equipamento FROM exercicios;
+
+
+SELECT nome AS Professor FROM instrutores;
+
+
+SELECT MAX(peso) AS "Peso Maximo" FROM alunos;
+
+
+SELECT MIN(valor_mensal) FROM planos;
+
+
+SELECT MAX(data_nascimento) FROM alunos;
+
+
+SELECT 
+    nome AS Cliente, 
+    cpf AS Documento 
+FROM alunos;
+
+
+SELECT AVG(altura) FROM alunos;
+
+
+SELECT DISTINCT objetivo FROM treinos;
+
+
+SELECT SUM(valor_mensal) FROM planos;
+
+
+SELECT 
+    a.nome AS Aluno, 
+    p.nome AS Plano
+FROM alunos AS a
+INNER JOIN planos AS p ON a.id_plano = p.id;
+
+
+INSERT INTO alunos (nome, cpf, data_nascimento, email, peso, altura, id_plano) 
+VALUES ('Lucas Sem Treino', '98765432109', '2000-05-20', 'lucas@email.com', 80.00, 1.80, NULL);
+
+SELECT 
+    a.nome AS Aluno, 
+    p.nome AS Plano
+FROM alunos AS a
+LEFT JOIN planos AS p ON a.id_plano = p.id;
+
+
+SELECT 
+    i.nome AS Instrutor, 
+    t.objetivo AS "Objetivo do Treino"
+FROM instrutores AS i
+INNER JOIN treinos AS t ON i.id = t.id_instrutor;
+
+
+SELECT 
+    a.nome AS Aluno, 
+    t.objetivo AS Objetivo, 
+    i.nome AS Instrutor
+FROM alunos AS a
+INNER JOIN treinos AS t ON a.id = t.id_aluno
+INNER JOIN instrutores AS i ON t.id_instrutor = i.id;
+
+
+SELECT 
+    e.nome_exercicio AS Exercicio, 
+    it.series AS Series, 
+    it.repeticoes AS Repeticoes
+FROM exercicios AS e
+INNER JOIN itens_treino AS it ON e.id = it.id_exercicio
+WHERE it.id_treino = 2;
+
+
+SELECT 
+    a.nome AS Aluno, 
+    t.data_criacao AS "Data do Treino"
+FROM alunos AS a
+INNER JOIN treinos AS t ON a.id = t.id_aluno;
+
+
+SELECT 
+    a.nome AS Aluno, 
+    p.valor_mensal AS "Valor do Plano"
+FROM alunos AS a
+INNER JOIN planos AS p ON a.id_plano = p.id;
