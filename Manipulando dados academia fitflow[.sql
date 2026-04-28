@@ -316,3 +316,37 @@ SELECT
     p.valor_mensal AS "Valor do Plano"
 FROM alunos AS a
 INNER JOIN planos AS p ON a.id_plano = p.id;
+
+
+
+select a.nome, t.treinos, it.repeticoes, e.equipamento ,
+from alunos a
+join treinos t on a.id = t.id_aluno
+join itens_treino it on t.id = it.id_treino
+join exercicios e on it.id_exercicio = e.id;
+
+
+
+
+select objetivo,
+	(select nome from instrutores i where id = t.id_instrutor) as nome_professor from treinos t;
+
+
+select id, nome_exercicio from exercicios 
+where id not in (select id_exercicio from itens_treino);
+
+
+select nome, especialidade from instrutores i
+where exists (select 1 from treinos t
+				where t.id_instrutor = i.id);
+
+
+select nome, valor_mensal from planos p
+where not exists (select 1 from alunos a
+				where p.id = a.id_plano);
+
+select * from planos;
+
+
+
+
