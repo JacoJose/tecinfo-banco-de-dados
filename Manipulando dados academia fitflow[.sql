@@ -348,5 +348,25 @@ where not exists (select 1 from alunos a
 select * from planos;
 
 
+create table backup_alunos as 
+select * from alunos
+where cpf is not null;
+
+select * from backup_alunos;
+
+
+
+select * from alunos where cpf is not null;
+
+create table resumo_planos as
+select p.nome , count(a.id) as "total alunos" 
+from planos p
+left join alunos a on p.id = a.id_plano
+group by p.nome;
+
+
+
+
+
 
 
