@@ -364,6 +364,8 @@ from planos p
 left join alunos a on p.id = a.id_plano
 group by p.nome;
 
+insert into planos (nome,valor_mensal, duracao_meses)
+select 'Plano VIP Gold', MAX(valor_mensal), 12 from planos;
 
 
 
