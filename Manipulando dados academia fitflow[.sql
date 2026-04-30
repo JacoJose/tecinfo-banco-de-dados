@@ -368,7 +368,31 @@ insert into planos (nome,valor_mensal, duracao_meses)
 select 'Plano VIP Gold', MAX(valor_mensal), 12 from planos;
 
 
+CREATE TABLE auditoria_precos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50),
+    valor DECIMAL(10,2),
+    diferenca DECIMAL(10,2)
+);
 
 
+INSERT INTO auditoria_precos (nome, valor, diferenca)
+SELECT 
+    nome, 
+    valor_mensal,
+    ((SELECT MAX(valor_mensal) FROM planos) - valor_mensal) AS diferenca
+FROM planos;
 
 
+UPDATE treinos 
+SET id_instrutor = (SELECT id FROM instrutores ORDER BY data_contratacao DESC LIMIT 1)
+WHERE id_instrutor = 1;
+
+
+DELETE FROM alunos 
+WHERE EXISTS (
+    SELECT 1 
+    FROM planos 
+    WHERE planos.id = alunos.id_plano 
+    AND planos.valor_mensal < 50
+);
