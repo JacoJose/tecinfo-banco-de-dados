@@ -396,3 +396,79 @@ WHERE EXISTS (
     WHERE planos.id = alunos.id_plano 
     AND planos.valor_mensal < 50
 );
+
+use db_academia_fitflow;
+
+create table log_instrutores(
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    mensagem VARCHAR(50) not null,
+    data_alteracao timestamp not null
+);
+
+
+
+create trigger trg_auditoria_instrutores
+after update on instrutores
+for each row
+begin
+	if new.nome <> old.nome then
+	insert into log_instrutores(mensagem,data_alteracao)
+	values('Nome foi Alterado',now());
+	elseif new.especialidade <> old.especialidade then
+	insert into log_instrutores(mensagem,data_alteracao)
+	values('Especialidade foi Alterada',now());
+	end if;
+end
+
+select * from log_instrutores;
+
+update instrutores set nome = 'Jacó' where id = 1;
+
+
+create trigger trg_bloquear_exclusao
+before delete on exercicios 
+for each row
+begin
+	if old.nome_exercicio = 'Supino Reto' then
+	signal sqlstate '45000'
+	set message_text = 'Erro: não é possivel excluir o exercicio supino reto';
+	end if;
+end
+
+DELETE FROM exercicios WHERE id = 1;
+
+create table estatistica_academia(
+    id int auto_increment primary key,
+    total_alunos int(255)
+);
+
+insert into estatistica_academia (total_alunos)
+select count(nome) from alunos;
+
+select * from estatistica_academia;
+
+create trigger trg_conta_aluno_entrou
+after insert on alunos
+for each row
+begin
+    update estatistica_academia 
+    set total_alunos = total_alunos + 1
+    where id = 1;
+end
+
+
+create trigger trg_conta_aluno_saiu
+after delete on alunos
+for each row
+begin
+    update estatistica_academia 
+    set total_alunos = total_alunos - 1
+    where id = 1;
+end
+
+INSERT INTO alunos (nome, cpf, data_nascimento, email, peso, altura, id_plano) VALUES 
+('Jacó José', '12365238901', '2004-05-13', 'jaco@email.com', 70, 1.80, 4);
+
+delete from alunos where nome = 'Ana Souza';
+
+SHOW TRIGGERS LIKE 'alunos';
